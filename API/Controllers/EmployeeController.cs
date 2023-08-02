@@ -18,13 +18,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Employee>>> GetAllEmployees()
         {
-            return await _employeeRepository.GetAllEmployees(); 
+            return await _employeeRepository.GetAllEntity(); 
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
-            var result = await _employeeRepository.GetEmployee(id);
+            var result = await _employeeRepository.GetEntity(id);
             if (result is null)
                 return BadRequest(result);
 
@@ -34,14 +34,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Employee>>> CreateEmployee(Employee employee)
         {
-            var result = await _employeeRepository.CreateEmployee(employee);
+            var result = await _employeeRepository.AddEntity(employee);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Employee>>> UpdateEmployee(int id, Employee req)
         {
-            var result = await _employeeRepository.UpdateEmployee(id, req);
+            var result = await _employeeRepository.UpdateEntity(id, req);
             if (result is null)
                 return BadRequest(result);
 
@@ -51,7 +51,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Employee>>> DeleteEmployee(int id)
         {
-            var result = await _employeeRepository.DeleteEmployee(id);
+            var result = await _employeeRepository.DeleteEntity(id);
             if (result is null)
                 return BadRequest(result);
 

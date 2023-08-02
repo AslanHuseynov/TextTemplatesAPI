@@ -18,13 +18,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Vacation>>> GetAllVacations()
         {
-            return await _vacationRepository.GetAllVacations();
+            return await _vacationRepository.GetAllEntity();
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Vacation>> GetVacation(int id)
         {
-            var result = await _vacationRepository.GetVacation(id);
+            var result = await _vacationRepository.GetEntity(id);
             if (result is null)
                 return BadRequest(result);
 
@@ -34,14 +34,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Vacation>>> CreateVacation(Vacation vacation)
         {
-            var result = await _vacationRepository.CreateVacation(vacation);
+            var result = await _vacationRepository.AddEntity(vacation);
             return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<List<Vacation>>> UpdateVacation(int id, Vacation req)
         {
-            var result = await _vacationRepository.UpdateVacation(id, req);
+            var result = await _vacationRepository.UpdateEntity(id, req);
             if (result is null)
                 return BadRequest(result);
 
@@ -51,7 +51,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Vacation>>> DeleteVacation(int id)
         {
-            var result = await _vacationRepository.DeleteVacation(id);
+            var result = await _vacationRepository.DeleteEntity(id);
             if (result is null)
                 return BadRequest(result);
 
