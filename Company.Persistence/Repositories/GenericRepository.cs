@@ -19,7 +19,7 @@ namespace Company.Persistence.Repositories
             return entity;
         }
 
-        public async Task<List<T>?> DeleteEntity(int id)
+        public virtual async Task<List<T>?> DeleteEntity(int id)
         {
             var entities = _dbContext.Set<T>();
             var entity = await entities.FindAsync(id);
@@ -51,7 +51,7 @@ namespace Company.Persistence.Repositories
             return entity;
         }
 
-        public async Task<T> UpdateEntity(int id, T req)
+        public virtual async Task<T> UpdateEntity(int id, T req)
         {
             var entity = await GetEntity(id);
             if (entity == null)

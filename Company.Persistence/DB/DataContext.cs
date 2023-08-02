@@ -7,6 +7,9 @@ namespace Company.Persistence.DB
     {
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Vacation> Vacations { get; set; }
+        public DbSet<Template> Templates { get; set; }
+        public DbSet<TemplateAuditTrail> AuditTrails { get; set; }
+
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {

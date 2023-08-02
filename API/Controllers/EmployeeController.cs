@@ -1,4 +1,6 @@
-﻿using Company.Application.Interfaces;
+﻿using AutoMapper;
+using Company.Application.Dtos.EmployeeDto;
+using Company.Application.Interfaces;
 using Company.Model.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +11,12 @@ namespace API.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, IMapper mapper)
         {
             _employeeRepository = employeeRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -32,18 +36,18 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Employee>>> CreateEmployee(Employee employee)
+        public async Task<ActionResult<List<Employee>>> CreateEmployee(CreateEmployeeDto createEmployeeDto)
         {
+            var employee = _mapper.Map<Employee>(createEmployeeDto);
             var result = await _employeeRepository.AddEntity(employee);
             return Ok(result);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<List<Employee>>> UpdateEmployee(int id, Employee req)
+        [HttpPut]
+        public async Task<ActionResult<List<Employee>>> UpdateEmployee(UpdateEmployeeDto updateEmployeeDto)
         {
-            var result = await _employeeRepository.UpdateEntity(id, req);
-            if (result is null)
-                return BadRequest(result);
+            var employee = _mapper.Map<Employee>(updateEmployeeDto);
+            var result = await _employeeRepository.UpdateEntity(updateEmployeeDto.Id, employee);
 
             return Ok(result);
         }

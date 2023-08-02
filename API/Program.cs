@@ -1,4 +1,5 @@
-﻿using Company.Application.Interfaces;
+﻿using Company.Application.Dtos.VacationDto;
+using Company.Application.Interfaces;
 using Company.Persistence.DB;
 using Company.Persistence.Repositories;
 
@@ -12,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IVacationRepository, VacationRepository>();
+builder.Services.AddAutoMapper(typeof(CreateVacationDto).Assembly);
 builder.Services.AddDbContext<DataContext>();
 
 var app = builder.Build();
