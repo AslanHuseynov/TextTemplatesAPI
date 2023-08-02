@@ -1,4 +1,6 @@
-﻿namespace API.Models
+﻿using Company.Model.Models;
+
+namespace API.Models
 {
     public class Vacation
     {

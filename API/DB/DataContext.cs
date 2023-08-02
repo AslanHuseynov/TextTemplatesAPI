@@ -1,4 +1,5 @@
 ﻿global using Microsoft.EntityFrameworkCore;
+using Company.Model.Models;
 
 namespace API.DB
 {

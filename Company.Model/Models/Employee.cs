@@ -1,4 +1,4 @@
-﻿namespace API.Models
+﻿namespace Company.Model.Models
 {
     public class Employee
     {

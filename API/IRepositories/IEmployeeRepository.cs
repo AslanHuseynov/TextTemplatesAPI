@@ -1,4 +1,6 @@
-﻿namespace API.IRepositories
+﻿using Company.Model.Models;
+
+namespace API.IRepositories
 {
     public interface IEmployeeRepository
     {

@@ -1,4 +1,5 @@
 ﻿using API.IRepositories;
+using Company.Model.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace API.Repositories
