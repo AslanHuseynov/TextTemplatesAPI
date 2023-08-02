@@ -1,6 +1,5 @@
-﻿using API.IRepositories;
-using API.Repositories;
-using Microsoft.AspNetCore.Http;
+﻿using Company.Application.Interfaces;
+using Company.Model.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

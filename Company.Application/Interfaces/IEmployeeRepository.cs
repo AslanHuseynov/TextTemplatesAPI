@@ -1,6 +1,6 @@
 ﻿using Company.Model.Models;
 
-namespace API.IRepositories
+namespace Company.Application.Interfaces
 {
     public interface IEmployeeRepository
     {

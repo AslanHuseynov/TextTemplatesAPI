@@ -1,7 +1,7 @@
-﻿global using Microsoft.EntityFrameworkCore;
-using Company.Model.Models;
+﻿using Company.Model.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace API.DB
+namespace Company.Persistence.DB
 {
     public class DataContext : DbContext
     {

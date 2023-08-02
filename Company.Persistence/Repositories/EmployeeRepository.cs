@@ -1,8 +1,9 @@
-﻿using API.IRepositories;
+﻿using Company.Application.Interfaces;
 using Company.Model.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Company.Persistence.DB;
+using Microsoft.EntityFrameworkCore;
 
-namespace API.Repositories
+namespace Company.Persistence.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {

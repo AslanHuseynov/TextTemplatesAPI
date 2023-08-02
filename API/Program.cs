@@ -1,7 +1,6 @@
-﻿global using API.Models;
-global using API.DB;
-using API.IRepositories;
-using API.Repositories;
+﻿using Company.Application.Interfaces;
+using Company.Persistence.DB;
+using Company.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
