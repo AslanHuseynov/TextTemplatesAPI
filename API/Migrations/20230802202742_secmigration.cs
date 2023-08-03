@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class First : Migration
+    public partial class secmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,12 +29,25 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Templates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Templates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Vacations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false)
@@ -47,8 +60,36 @@ namespace API.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "AuditTrails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TemplateId = table.Column<int>(type: "int", nullable: false),
+                    Action = table.Column<int>(type: "int", nullable: false),
+                    UpdatedContent = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuditTrails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuditTrails_Templates_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "Templates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuditTrails_TemplateId",
+                table: "AuditTrails",
+                column: "TemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vacations_EmployeeId",
@@ -60,7 +101,13 @@ namespace API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AuditTrails");
+
+            migrationBuilder.DropTable(
                 name: "Vacations");
+
+            migrationBuilder.DropTable(
+                name: "Templates");
 
             migrationBuilder.DropTable(
                 name: "Employees");

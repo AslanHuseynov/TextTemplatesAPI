@@ -18,7 +18,7 @@ namespace Company.Persistence.DB
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=DESKTOP-THVOU75\\MSSQLSERVER02;Database=TextTemplatesDB;Trusted_Connection=true;TrustServerCertificate=true;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-THVOU75\\MSSQLSERVER02;Database=TextTemplatesDB4;Trusted_Connection=true;TrustServerCertificate=true;", b => b.MigrationsAssembly("API"));
         }
     }
 }

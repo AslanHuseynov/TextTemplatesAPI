@@ -41,7 +41,7 @@ namespace API.Controllers
         public async Task<ActionResult<List<Template>>> CreateTemplate(CreateTemplateDto createTemplateDto)
         {
             var temp = _mapper.Map<Template>(createTemplateDto);
-            var result = await _templateRepository.AddEntity(temp);
+            var result = await _templateRepository.AddEntity(temp, createTemplateDto.UserName);
             return Ok(result);
         }
 
@@ -55,9 +55,9 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<Template>>> DeleteTemplate(int id)
+        public async Task<ActionResult<List<Template>>> DeleteTemplate(int id, string userName)
         {
-            var result = await _templateRepository.DeleteEntity(id);
+            var result = await _templateRepository.DeleteEntity(id, userName);
             if (result is null)
                 return BadRequest(result);
 
