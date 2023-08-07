@@ -14,6 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IVacationRepository, VacationRepository>();
 builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();
+builder.Services.AddScoped<ITemplateOperationsRepository, TemplateOperationsRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddAutoMapper(typeof(CreateVacationDto).Assembly);
 builder.Services.AddDbContext<DataContext>();
 
