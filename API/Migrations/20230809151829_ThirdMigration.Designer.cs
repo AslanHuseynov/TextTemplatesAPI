@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230807063710_ApiMigration")]
-    partial class ApiMigration
+    [Migration("20230809151829_ThirdMigration")]
+    partial class ThirdMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,6 +142,9 @@ namespace API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DutyEmployeeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");

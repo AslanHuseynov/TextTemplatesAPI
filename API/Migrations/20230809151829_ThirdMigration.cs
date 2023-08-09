@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class ApiMigration : Migration
+    public partial class ThirdMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,6 +65,7 @@ namespace API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DutyEmployeeId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -110,6 +111,16 @@ namespace API.Migrations
                 name: "IX_Vacations_EmployeeId",
                 table: "Vacations",
                 column: "EmployeeId");
+
+            migrationBuilder.InsertData(
+                table: "Templates",
+                columns: new[] { "Title", "Text" },
+                values: new object[,]
+                {
+                { "Mail", "გაცნობებთ, რომ @FirstFullName იმყოფება შვებულებაში: (@StartDate - @EndDate) მისი პერსონალური სამედიცინო მენეჯერი არდიში იქნება მისი კოლეგა @SecondFullName. გთხოვთ, ნებისმიერ საკითხზე დაუკავშირდეთ მას ნომერზე: @PhoneNumber, ასევე Viber-ით, WhatsApp-ით ან ელფოსტით: @Email." },
+                { "SMS", "მოგესალმებით, გაცნობებთ რომ, თქვენ დაგრჩათ @NumberOfLeftDays დღე შვებულება." },
+                }
+                );
         }
 
         /// <inheritdoc />

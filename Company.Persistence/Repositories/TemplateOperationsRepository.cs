@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using Company.Application.Interfaces;
+﻿using Company.Application.Interfaces;
 using Company.Model.Models;
-using System;
+using Microsoft.Extensions.Configuration;
 using System.Text;
+
 
 namespace Company.Persistence.Repositories
 {
@@ -12,20 +12,24 @@ namespace Company.Persistence.Repositories
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IVacationRepository _vacationRepository;
         private readonly INotificationRepository _notificationRepository;
+        private readonly IConfiguration _configuration;
 
         public TemplateOperationsRepository(ITemplateRepository templateRepository, IEmployeeRepository employeeRepository,
-            IVacationRepository vacationRepository, INotificationRepository notificationRepository)
+            IVacationRepository vacationRepository, INotificationRepository notificationRepository, IConfiguration configuration)
         {
             _templateRepository = templateRepository;
             _employeeRepository = employeeRepository;
             _vacationRepository = vacationRepository;
             _notificationRepository = notificationRepository;
+            _configuration = configuration;
         }
-        public async Task<string> SendMail(int templateId, int employeeId, string mail, string user)
+        public async Task<string> SendMail(int employeeId, string mail, string user)
         {
             var currentVacation = await _vacationRepository.GetCurrentVacation(employeeId);
             if (currentVacation == null)
                 return string.Empty;
+
+            var templateId = _configuration.GetValue<int>("MailTemplateId");
 
             var template = await _templateRepository.GetEntity(templateId);
             var employee = await _employeeRepository.GetEntity(employeeId);
@@ -53,28 +57,10 @@ namespace Company.Persistence.Repositories
 
             return result.ToString();
         }
-
-        private static string GenerateText(object obj, string text)
+        public async Task<string> SendSMS(int employeeId, string number, string user)
         {
-            StringBuilder result = new StringBuilder(text);
+            var templateId = _configuration.GetValue<int>("SMSTemplateId");
 
-            foreach (var propertyInfo in obj.GetType().GetProperties())
-            {
-                var placeholder = "@" + propertyInfo.Name;
-                var value = propertyInfo.GetValue(obj)?.ToString() ?? string.Empty;
-                result.Replace(placeholder, value);
-            }
-            return result.ToString();
-        }
-
-        private static int GetTotalDays(DateTime end, DateTime from)
-        {
-            var days = (int)(end - from).TotalDays;
-            return days;
-        }
-
-        public async Task<string> SendSMS(int templateId, int employeeId, string number, string user)
-        {
             var template = await _templateRepository.GetEntity(templateId);
             var year = DateTime.Now.Year;
             var vacations = (await _vacationRepository.GetVacations(employeeId))
@@ -118,6 +104,23 @@ namespace Company.Persistence.Repositories
             await _notificationRepository.AddEntity(notification);
 
             return result.ToString();
+        }
+        private static string GenerateText(object obj, string text)
+        {
+            StringBuilder result = new StringBuilder(text);
+
+            foreach (var propertyInfo in obj.GetType().GetProperties())
+            {
+                var placeholder = "@" + propertyInfo.Name;
+                var value = propertyInfo.GetValue(obj)?.ToString() ?? string.Empty;
+                result.Replace(placeholder, value);
+            }
+            return result.ToString();
+        }
+        private static int GetTotalDays(DateTime end, DateTime from)
+        {
+            var days = (int)(end - from).TotalDays;
+            return days;
         }
     }
 }
