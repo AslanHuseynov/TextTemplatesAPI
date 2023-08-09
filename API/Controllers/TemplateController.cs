@@ -2,7 +2,6 @@
 using Company.Application.Dtos.TemplateDto;
 using Company.Application.Interfaces;
 using Company.Model.Models;
-using Company.Persistence.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

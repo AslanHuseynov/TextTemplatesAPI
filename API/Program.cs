@@ -2,6 +2,7 @@
 using Company.Application.Interfaces;
 using Company.Persistence.DB;
 using Company.Persistence.Repositories;
+using Company.Persistence.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IVacationRepository, VacationRepository>();
 builder.Services.AddScoped<ITemplateRepository, TemplateRepository>();
-builder.Services.AddScoped<ITemplateOperationsRepository, TemplateOperationsRepository>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddAutoMapper(typeof(CreateVacationDto).Assembly);
 builder.Services.AddDbContext<DataContext>();

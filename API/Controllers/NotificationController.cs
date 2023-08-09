@@ -8,24 +8,24 @@ namespace API.Controllers
     [ApiController]
     public class NotificationController : ControllerBase
     {
-        private readonly ITemplateOperationsRepository _templateOperationsRepository;
+        private readonly INotificationService _notificationService;
 
-        public NotificationController(ITemplateOperationsRepository templateOperationsRepository)
+        public NotificationController(INotificationService notificationService)
         {
-            _templateOperationsRepository = templateOperationsRepository;
+            _notificationService = notificationService;
         }
 
         [HttpPost("SendSms")]
         public async Task<ActionResult<List<Template>>> SendSMS(int employeeId, string number, string user)
         {
-            var result = await _templateOperationsRepository.SendSMS(employeeId, number, user);
+            var result = await _notificationService.SendSMS(employeeId, number, user);
             return Ok(result);
         }
 
         [HttpPost("SendMail")]
         public async Task<ActionResult<List<Template>>> SendMail(int employeeId, string mail, string user)
         {
-            var result = await _templateOperationsRepository.SendMail(employeeId, mail, user);
+            var result = await _notificationService.SendMail(employeeId, mail, user);
             return Ok(result);
         }
 
