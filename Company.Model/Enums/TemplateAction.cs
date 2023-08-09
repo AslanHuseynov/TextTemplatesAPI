@@ -1,4 +1,4 @@
-﻿namespace Company.Application
+﻿namespace Company.Model.Enums
 {
     public enum TemplateAction
     {

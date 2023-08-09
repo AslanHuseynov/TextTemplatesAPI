@@ -1,4 +1,5 @@
 ﻿using Company.Application.Interfaces;
+using Company.Model.Enums;
 using Company.Model.Models;
 using Company.Persistence.DB;
 
@@ -19,7 +20,7 @@ namespace Company.Persistence.Repositories
                 UpdatedContent = string.Empty,
                 TemplateId = template.Id,
                 UserName = userName,
-                Action = Application.TemplateAction.Add
+                Action = TemplateAction.Add
             };
 
             _dbContext.AuditTrails.Add(templateAuditTrail);
@@ -37,7 +38,7 @@ namespace Company.Persistence.Repositories
             {
                 ChangeDate = DateTime.Now,
                 UpdatedContent = oldText,
-                Action = Application.TemplateAction.Update,
+                Action = TemplateAction.Update,
                 UserName = userName,
                 TemplateId = req.Id
             };
@@ -55,7 +56,7 @@ namespace Company.Persistence.Repositories
                 TemplateId = entity.Id,
                 UpdatedContent = entity.Text,
                 UserName = userName,
-                Action = Application.TemplateAction.Delete
+                Action = TemplateAction.Delete
             };
             _dbContext.AuditTrails.Add(templateAuditTrail);
 

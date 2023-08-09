@@ -51,7 +51,7 @@ namespace Company.Persistence.Repositories
 
             var result = GenerateText(templateData, template.Text);
 
-            var notification = new Notification() { SavedBy = user, Text = result.ToString(), Addressee = mail };
+            var notification = new Notification() { Text = result.ToString(), Addressee = mail };
 
             await _notificationRepository.AddEntity(notification);
 
@@ -99,7 +99,7 @@ namespace Company.Persistence.Repositories
 
             var result = GenerateText(templateData, template.Text);
 
-            var notification = new Notification() { SavedBy = user, Text = result.ToString(), Addressee = number };
+            var notification = new Notification() { Text = result.ToString(), Addressee = number };
 
             await _notificationRepository.AddEntity(notification);
 

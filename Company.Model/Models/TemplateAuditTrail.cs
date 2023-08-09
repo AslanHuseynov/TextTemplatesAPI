@@ -1,4 +1,4 @@
-﻿using Company.Application;
+﻿using Company.Model.Enums;
 
 namespace Company.Model.Models
 {
