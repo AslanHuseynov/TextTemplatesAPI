@@ -7,6 +7,5 @@
         Task<T> AddEntity(T entity);
         Task<T> UpdateEntity(int id, T req);
         Task<List<T>?> DeleteEntity(int id);
-        Task<List<T>> DeleteRange<Y>(Y[] values) where Y : class;
     }
 }

@@ -31,15 +31,6 @@ namespace Company.Persistence.Repositories
             return await entities.ToListAsync();
         }
 
-        public async Task<List<T>> DeleteRange<Y>(Y[] values) where Y : class
-        {
-            var entities = _dbContext.Set<Y>();
-            entities.RemoveRange(values);
-            await _dbContext.SaveChangesAsync();
-            return await _dbContext.Set<T>().ToListAsync();
-        }
-
-
         public async Task<List<T>> GetAllEntity()
         {
             return await _dbContext.Set<T>().ToListAsync();
