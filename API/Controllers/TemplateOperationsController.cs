@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Company.Application.Interfaces;
+﻿using Company.Application.Interfaces;
 using Company.Model.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 
 namespace API.Controllers
 {
@@ -11,75 +9,24 @@ namespace API.Controllers
     public class TemplateOperationsController : ControllerBase
     {
         private readonly ITemplateOperationsRepository _templateOperationsRepository;
-        private readonly IMapper _mapper;
-        private readonly ITemplateRepository _templateRepository;
-        private readonly IEmployeeRepository _employeeRepository;
-        private readonly INotificationRepository _notificationRepository;
 
-        public TemplateOperationsController(ITemplateOperationsRepository templateOperationsRepository, IMapper mapper,
-            ITemplateRepository templateRepository, IEmployeeRepository employeeRepository, INotificationRepository notificationRepository)
+        public TemplateOperationsController(ITemplateOperationsRepository templateOperationsRepository)
         {
             _templateOperationsRepository = templateOperationsRepository;
-            _mapper = mapper;
-            _templateRepository = templateRepository;
-            _employeeRepository = employeeRepository;
-            _notificationRepository = notificationRepository;
         }
 
         [HttpPost("SendSms")]
-        public async Task<ActionResult<List<Template>>> SendSMS(string fullName, DateTime start, DateTime end, string phoneNumber, string user)
+        public async Task<ActionResult<List<Template>>> SendSMS(int templateId, int employeeId, string number, string user)
         {
-            var splitName = fullName.Split(" ");
-            var firstName = splitName.First();
-            var lastName = splitName.Last();
-            var template = await _templateRepository.GetEntity(1);
-            var text = template.Text;
-
-            //var employee = await _employeeRepository.GetEntity(employeId);
-
-            StringBuilder result = new StringBuilder(text);
-
-            result.Replace("@FirstName", firstName);
-            result.Replace("@LastName", lastName);
-            result.Replace("@From", start.ToString());
-            result.Replace("@Until", end.ToString());
-            result.Replace("@FirstName2", "Test");
-            result.Replace("@LastName2", "Test");
-
-            var notification = new Notification() { SavedBy = user, Text = result.ToString(), Addressee = phoneNumber };
-
-            await _notificationRepository.AddEntity(notification);
-
-            return Ok(result.ToString());
+            var result = await _templateOperationsRepository.SendSMS(templateId, employeeId, number, user);
+            return Ok(result);
         }
 
         [HttpPost("SendMail")]
-        public async Task<ActionResult<List<Template>>> SendMail(string fullName, DateTime start, DateTime end, string mail, string user)
+        public async Task<ActionResult<List<Template>>> SendMail(int templateId, int employeeId, string mail, string user)
         {
-            var splitName = fullName.Split(" ");
-            var firstName = splitName.First();
-            var lastName = splitName.Last();
-            var template = await _templateRepository.GetEntity(1);
-            var text = template.Text;
-
-            //var employee = await _employeeRepository.GetEntity(employeId);
-
-            StringBuilder result = new StringBuilder(text);
-
-            result.Replace("@FirstName", firstName);
-            result.Replace("@LastName", lastName);
-            result.Replace("@From", start.ToString());
-            result.Replace("@Until", end.ToString());
-            result.Replace("@FirstName2", "Test");
-            result.Replace("@LastName2", "Test");
-
-            var notification = new Notification() { SavedBy = user, Text = result.ToString(), Addressee = mail };
-
-            await _notificationRepository.AddEntity(notification);
-
-            return Ok(result.ToString());
-            /*var result = await _templateOperationsRepository.SendMail(temp);
-            return Ok(result);*/
+            var result = await _templateOperationsRepository.SendMail(templateId, employeeId, mail, user);
+            return Ok(result);
         }
     }
 }
