@@ -16,16 +16,16 @@ namespace API.Controllers
         }
 
         [HttpPost("SendSms")]
-        public async Task<ActionResult<List<Template>>> SendSMS(int employeeId, string number, string user)
+        public async Task<ActionResult<List<Template>>> SendSMS(int employeeId, string number)
         {
-            var result = await _notificationService.SendSMS(employeeId, number, user);
+            var result = await _notificationService.SendSMS(employeeId, number);
             return Ok(result);
         }
 
         [HttpPost("SendMail")]
-        public async Task<ActionResult<List<Template>>> SendMail(int employeeId, string mail, string user)
+        public async Task<ActionResult<List<Template>>> SendMail(int employeeId, string mail)
         {
-            var result = await _notificationService.SendMail(employeeId, mail, user);
+            var result = await _notificationService.SendMail(employeeId, mail);
             return Ok(result);
         }
 

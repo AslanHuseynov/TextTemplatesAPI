@@ -22,11 +22,11 @@ namespace Company.Persistence.Services
             _notificationRepository = notificationRepository;
             _configuration = configuration;
         }
-        public async Task<string> SendMail(int employeeId, string mail, string user)
+        public async Task<string> SendMail(int employeeId, string mail)
         {
             var currentVacation = await _vacationRepository.GetCurrentVacation(employeeId);
             if (currentVacation == null)
-                return string.Empty;
+                throw new Exception("The employee has no active or ongoing vacation!");
 
             var templateId = _configuration.GetValue<int>("MailTemplateId");
 
@@ -53,7 +53,7 @@ namespace Company.Persistence.Services
             return result.ToString();
         }
 
-        public async Task<string> SendSMS(int employeeId, string number, string user)
+        public async Task<string> SendSMS(int employeeId, string number)
         {
             var templateId = _configuration.GetValue<int>("SMSTemplateId");
 
@@ -114,7 +114,7 @@ namespace Company.Persistence.Services
         }
         private static int GetTotalDays(DateTime end, DateTime from)
         {
-            var days = (int)(end - from).TotalDays;
+            var days =(24 - (int)(end - from).TotalDays);
             return days;
         }
     }
