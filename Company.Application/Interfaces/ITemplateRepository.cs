@@ -1,5 +1,4 @@
-﻿using Company.Application.Dtos.TemplateDto;
-using Company.Model.Models;
+﻿using Company.Model.Models;
 
 namespace Company.Application.Interfaces
 {

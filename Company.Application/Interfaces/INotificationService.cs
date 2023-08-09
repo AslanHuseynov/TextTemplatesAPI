@@ -1,8 +1,6 @@
-﻿using Company.Model.Models;
-
-namespace Company.Application.Interfaces
+﻿namespace Company.Application.Interfaces
 {
-    public interface ITemplateOperationsRepository
+    public interface INotificationService
     {
         Task<string> SendSMS(int employeeId, string number, string user);
         Task<string> SendMail(int employeeId, string mail, string user);

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Company.Application.Interfaces;
+﻿using Company.Application.Interfaces;
 using Company.Model.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,27 +8,26 @@ namespace API.Controllers
     [ApiController]
     public class NotificationController : ControllerBase
     {
-        private readonly INotificationRepository _notificationRepository;
+        private readonly ITemplateOperationsRepository _templateOperationsRepository;
 
-        public NotificationController(INotificationRepository notificationRepository)
+        public NotificationController(ITemplateOperationsRepository templateOperationsRepository)
         {
-            _notificationRepository = notificationRepository;
+            _templateOperationsRepository = templateOperationsRepository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Notification>>> GetAllNotifications()
+        [HttpPost("SendSms")]
+        public async Task<ActionResult<List<Template>>> SendSMS(int employeeId, string number, string user)
         {
-            return await _notificationRepository.GetAllEntity();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Notification>> GetNotification(int id)
-        {
-            var result = await _notificationRepository.GetEntity(id);
-            if (result is null)
-                return BadRequest(result);
-
+            var result = await _templateOperationsRepository.SendSMS(employeeId, number, user);
             return Ok(result);
         }
+
+        [HttpPost("SendMail")]
+        public async Task<ActionResult<List<Template>>> SendMail(int employeeId, string mail, string user)
+        {
+            var result = await _templateOperationsRepository.SendMail(employeeId, mail, user);
+            return Ok(result);
+        }
+
     }
 }
